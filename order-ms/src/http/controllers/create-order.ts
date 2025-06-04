@@ -2,6 +2,8 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 
 import { z } from 'zod/v4'
 
+import { trace } from '@opentelemetry/api'
+
 import { db } from '../../db/client.ts'
 
 import { schema } from '../../db/schemas/index.ts'
@@ -21,6 +23,8 @@ export async function createOrder(request: FastifyRequest, reply: FastifyReply) 
     customerId: 'dqmraubpbtoqdwz0w2q2mlct',
     amount
   }).returning()
+
+  trace.getActiveSpan()?.setAttribute('order_id', order.id)
 
   dispatchOrderCreated({
     orderId: order.id,

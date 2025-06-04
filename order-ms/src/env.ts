@@ -10,6 +10,7 @@ const envSchema = z.object({
   PORT: z.coerce.number().default(3333),
   DATABASE_URL: z.string().url(),
   BROKER_URL: z.string().url(),
+  OTEL_SERVICE_NAME: z.string(),
 })
 
 const _env = envSchema.safeParse(process.env)
