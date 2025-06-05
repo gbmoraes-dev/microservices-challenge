@@ -1,8 +1,8 @@
 import { customers } from './customers.ts'
 
-import { orders } from './orders.ts'
+import { invoices } from './invoices.ts'
 
 export const schema = {
   customers,
-  orders,
+  invoices,
 }

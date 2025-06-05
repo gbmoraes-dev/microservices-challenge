@@ -10,7 +10,10 @@ import { schema } from '../../db/schemas/index.ts'
 
 import { dispatchOrderCreated } from '../../broker/messages/order-created.ts'
 
-export async function createOrder(request: FastifyRequest, reply: FastifyReply) {
+export async function createOrder(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
   const createOrderBodySchema = z.object({
     amount: z.coerce.number().positive(),
   })
@@ -19,10 +22,13 @@ export async function createOrder(request: FastifyRequest, reply: FastifyReply) 
 
   console.log('✨ Creating order with amount:', amount)
 
-  const [order] = await db.insert(schema.orders).values({
-    customerId: 'dqmraubpbtoqdwz0w2q2mlct',
-    amount
-  }).returning()
+  const [order] = await db
+    .insert(schema.orders)
+    .values({
+      customerId: 'dqmraubpbtoqdwz0w2q2mlct',
+      amount,
+    })
+    .returning()
 
   trace.getActiveSpan()?.setAttribute('order_id', order.id)
 
@@ -30,8 +36,8 @@ export async function createOrder(request: FastifyRequest, reply: FastifyReply) 
     orderId: order.id,
     amount,
     customer: {
-      id: 'dqmraubpbtoqdwz0w2q2mlct'
-    }
+      id: 'dqmraubpbtoqdwz0w2q2mlct',
+    },
   })
 
   return reply.status(201).send()

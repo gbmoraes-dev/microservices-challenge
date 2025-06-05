@@ -15,8 +15,6 @@ import {
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 
-import { orderRoutes } from './controllers/routes/routes.ts'
-
 export const app = fastify().withTypeProvider<ZodTypeProvider>()
 
 app.setSerializerCompiler(serializerCompiler)
@@ -44,5 +42,3 @@ app.register(fastifyCors, { origin: '*' })
 app.get('/health', () => {
   return 'OK'
 })
-
-app.register(orderRoutes)
