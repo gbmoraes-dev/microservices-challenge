@@ -15,6 +15,8 @@ import {
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 
+import '../broker/subscriber.ts'
+
 export const app = fastify().withTypeProvider<ZodTypeProvider>()
 
 app.setSerializerCompiler(serializerCompiler)

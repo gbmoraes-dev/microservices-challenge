@@ -7,7 +7,7 @@ orders.consume(
       return null
     }
 
-    console.log('Received order:', message?.content.toString())
+    console.log('Received order:', message.content.toString())
 
     orders.ack(message)
   },
